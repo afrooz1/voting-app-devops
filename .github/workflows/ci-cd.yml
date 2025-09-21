@@ -1,0 +1,22 @@
+name: Voting App CI/CD
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Docker
+        uses: docker/setup-buildx-action@v2
+
+      - name: Build Docker images
+        run: |
+          docker build -t vote ./vote
+          docker build -t result ./result
+          docker build -t worker ./worker
